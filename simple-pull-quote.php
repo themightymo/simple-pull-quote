@@ -40,7 +40,7 @@ function my_css() {
 function getSimplePullQuote( $atts, $content = null ) {
         /* Add CSS classes to the pull quote (a.k.a. Style the thing!) */
 		$content = wpautop(trim($content));
-        return '<div class="simplePullQuote">'. do_shortcode($content) .'</div>';
+        return '<div class="simplePullQuote"><div class="quotation_mark">“</div>'. do_shortcode($content) .'</div>';
 }
 
 // Allow us to add the pull quote using Wordpress shortcode, "[pullquote][/pullquote]" 
@@ -71,6 +71,72 @@ function specific_enqueue($hook_suffix) {
   }
 }
 add_action( 'admin_enqueue_scripts', 'specific_enqueue' );
+
+
+
+
+
+
+
+
+/* BEGIN OPTIONS PAGE */
+// add the admin options page - via http://ottopress.com/2009/wordpress-settings-api-tutorial/
+add_action('admin_menu', 'simple_pull_quote_admin_add_page');
+function simple_pull_quote_admin_add_page() {
+	add_options_page('Simple Pull Quote Options Page', 'Simple Pull Quote Options', 'manage_options', 'simple-pull-quote', 'simple_pull_quote_options_page');
+}
+// display the admin options page
+function simple_pull_quote_options_page() {
+?>
+<div>
+	<h2>Simple Pull Quote Options</h2>
+	How do you want your pull quotes to look?
+	<form action="options.php" method="post">
+		<?php settings_fields('simple_pull_quote'); ?>
+		<?php do_settings_sections('simple_pull_quote'); ?>
+		<input name="Submit" type="submit" value="<?php esc_attr_e('Save Changes'); ?>" />
+	</form>
+</div>
+ 
+<?php
+}
+// add the admin settings and such
+add_action('admin_init', 'simple_pull_quote_admin_init');
+function simple_pull_quote_admin_init(){
+	register_setting( 'simple_pull_quote', 'simple_pull_quote', 'simple_pull_quote_validate' );
+	add_settings_section('simple_pull_quote_main', 'Main Settings', 'simple_pull_quote_section_text', 'simple_pull_quote');
+	add_settings_field('simple_pull_quote_text_string', 'Text Input', 'simple_pull_quote_setting_string', 'simple_pull_quote', 'simple_pull_quote_main');
+	add_settings_field('simple_pull_quote_text_string1', 'Text Input 1', 'simple_pull_quote_setting_string1', 'simple_pull_quote', 'simple_pull_quote_main');
+}
+// validate our options
+function simple_pull_quote_validate($input) {
+	$newinput['text_string'] = trim($input['text_string']);
+	/*if(!preg_match('/^[a-z0-9]{32}$/i', $newinput['text_string'])) {
+		$newinput['text_string'] = '';
+	}*/
+	return $newinput;
+	$newinput1['text_string1'] = trim($input['text_string1']);
+	/*if(!preg_match('/^[a-z0-9]{32}$/i', $newinput['text_string'])) {
+		$newinput['text_string'] = '';
+	}*/
+	return $newinput1;
+}
+function simple_pull_quote_section_text() {
+	echo '<p>Main description of this section here.</p>';
+}
+function simple_pull_quote_setting_string() {
+	$options = get_option('simple_pull_quote');
+	echo "<input id='simple_pull_quote_text_string' name='simple_pull_quote[text_string]' size='40' type='text' value='{$options['text_string']}' />";
+	
+}
+function simple_pull_quote_setting_string1() {
+	echo "<input id='simple_pull_quote_text_string1' name='simple_pull_quote[text_string1]' size='40' type='text' value='{$options['text_string1']}' />";
+}
+/* END OPTIONS PAGE */
+
+
+
+
 
 
 
