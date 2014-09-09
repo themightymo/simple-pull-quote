@@ -1,4 +1,5 @@
 .simplePullQuote{
+	position: relative;
 	width:200px;
 	float:right;
 	border-top:3px #868686 solid;
@@ -8,4 +9,17 @@
 	padding:6px;
 	margin:10px 0 10px 10px;
 	-webkit-box-shadow: 7px 7px 8px #818181;
-  	-moz-box-shadow: 7px 7px 8px #818181;}
+  	-moz-box-shadow: 7px 7px 8px #818181;
+  	z-index: 1;
+}
+.simplePullQuote .quotation_mark {
+	position: absolute;
+    top: -14px;
+    left: -10px;
+    color: #d9d9d9;
+    font-size: 4em;
+    z-index: 100;
+}
+.simplePullQuote p {
+	z-index: 200;
+}
