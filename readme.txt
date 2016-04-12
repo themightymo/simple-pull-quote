@@ -3,7 +3,7 @@ Contributors: llamaman, themightymo
 Donate link: http://themightymo.com/donate
 Tags: pull quote,quotes, quotation
 Requires at least: 2.5
-Tested up to: 4.0
+Tested up to: 4.4.2
 Stable tag: trunk
 
 The Simple Pull Quote WordPress Plugin provides an easy way for you to insert pull quotes into your posts and pages.  
@@ -23,6 +23,9 @@ http://youtu.be/JGudI9gr9iE
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
 == Frequently Asked Questions ==
+Q: How do I make the quote appear on the left side?  
+A: After you create your pull quote, add “class=“left” to it like this: [pullquote class="left”]TEXT HERE[/pullquote]
+
 Q: What if I am using a visual editor besides TinyMCE?
 A: You will need to manually add the shortcode [pullquote]YOUR TEXT HERE[/pullquote]
 

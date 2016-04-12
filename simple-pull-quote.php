@@ -2,14 +2,14 @@
 /**
  * @package Simple Pull Quote
  * @author Toby Cryns
- * @version 1.4
+ * @version 1.5
  */
 /*
 Plugin Name: Simple Pull Quote
 Plugin URI: http://www.themightymo.com/simple-pull-quote
 Description: Easily add pull quotes to blog posts using shortcode.
 Author: Toby Cryns
-Version: 1.4
+Version: 1.5
 Author URI: http://www.themightymo.com/updates
 */
 
@@ -37,15 +37,6 @@ function my_css() {
         echo '<link type="text/css" rel="stylesheet" href="' . plugins_url( 'css/simple-pull-quote.css', __FILE__ ) . '" />' . "\n";
 }
 
-function getSimplePullQuote( $atts, $content = null ) {
-        /* Add CSS classes to the pull quote (a.k.a. Style the thing!) */
-		$content = wpautop(trim($content));
-        return '<div class="simplePullQuote">'. do_shortcode($content) .'</div>';
-}
-
-// Allow us to add the pull quote using Wordpress shortcode, "[pullquote][/pullquote]" 
-add_shortcode('pullquote', 'getSimplePullQuote');
-
 // Add the CSS file to the header when the page loads
 add_action('wp_head', 'my_css');
 
@@ -72,7 +63,17 @@ function specific_enqueue($hook_suffix) {
 }
 add_action( 'admin_enqueue_scripts', 'specific_enqueue' );
 
-
+// v1.5 with help from https://developer.wordpress.org/plugins/shortcodes/shortcodes-with-parameters/
+function getSimplePullQuote( $atts, $content = null ) {
+    $output = '';
+    $pull_quote_atts = shortcode_atts( array(
+        //'quote' => 'My Quote',
+        'class' => 'right',
+    ), $atts );
+	$content = wpautop(trim($content));
+    return '<div class="simplePullQuote ' . wp_kses_post( $pull_quote_atts[ 'class' ] ) . '">'. do_shortcode($content) .'</div>';
+}
+add_shortcode('pullquote', 'getSimplePullQuote');
 
 
 // LEGACY CODE for Version < 0.2.4
