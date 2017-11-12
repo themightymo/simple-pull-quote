@@ -15,7 +15,7 @@
             // Register the command so that it can be invoked by using tinyMCE.activeEditor.execCommand('mceExample');
             ed.addCommand('mceSPQ', function(){
             
-                ed.execCommand('mceInsertContent', false, '[pullquote]'+ ed.selection.getContent() +'[/pullquote]');
+                ed.execCommand('mceInsertRawHTML', false, '<span class="simplePullQuote">'+ ed.selection.getContent() +'</span>');
 		ed.execCommand('mceRepaint');
                 
             });

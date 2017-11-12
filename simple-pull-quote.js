@@ -1,8 +1,8 @@
 edButtons[edButtons.length] = new edButton(
 	'pullquote'
 	,'pullquote'
-	,'[pullquote]'
-	,'[/pullquote]'
+	,'<span class="simplePullQuote">'
+	,'</span>'
 	,''
 	);
 
